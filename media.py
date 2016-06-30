@@ -18,10 +18,9 @@ class Trailer:
 class Movie:
     """Shows data of a movie and contains a Trailer."""
     
-    def __init__(self, movie_title, movie_description, movie_trailer_yt_id,
+    def __init__(self, movie_title, movie_trailer_yt_id,
                  movie_poster_url, movie_release_date):
         self.title = movie_title
-        self.description = movie_description
         self.trailer = Trailer(movie_trailer_yt_id)
         self.poster_url = movie_poster_url
         self.release_date = movie_release_date
@@ -29,7 +28,6 @@ class Movie:
 
     def render(self):
         return self.template.format(title=self.title,
-                                    description=self.description,
                                     trailer=self.trailer.render(),
                                     poster_url=self.poster_url,
                                     release_date=self.release_date)
@@ -45,6 +43,4 @@ class OMDBMovie(Movie):
         response = urllib.urlopen(api_url)
         movie_data = json.load(response)
 
-        Movie.__init__(self, movie_title, movie_data["Plot"],
-                       movie_trailer_yt_id, movie_data["Poster"],
-                       movie_data["Year"])
+        Movie.__init__(self, movie_title, movie_trailer_yt_id, movie_data["Poster"], movie_data["Year"])

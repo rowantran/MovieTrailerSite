@@ -1,5 +1,18 @@
 import media
 
+TRAILER_JS = """
+$(document).on('click', '.movie-poster', function (event) {
+    var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+    var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+    $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+        'id': 'trailer-video',
+        'type': 'text-html',
+        'src': sourceUrl,
+       'frameborder': 0
+     }));
+});
+"""
+
 
 class MovieApp:
     def __init__(self, app_title, movies_list):
@@ -14,7 +27,7 @@ class MovieApp:
         rendered_movies = ""
         for movie in self.movies:
             rendered_movies += movie.render()
-        return self.template.format(title=self.title, movies=rendered_movies)
+        return self.template.format(title=self.title, movies=rendered_movies, playTrailer=TRAILER_JS)
 
     def render_to_file(self, filename):
         render_target = open(filename, 'w')
