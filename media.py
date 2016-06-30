@@ -27,6 +27,7 @@ class Movie:
         self.template = open('html/movie.html', 'r').read()
 
     def render(self):
+        # Render template using info from constructor
         return self.template.format(title=self.title,
                                     trailer=self.trailer.render(),
                                     poster_url=self.poster_url,
