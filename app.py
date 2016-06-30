@@ -1,9 +1,15 @@
 import media
 
 TRAILER_JS = """
-$(document).on('click', '.movie-poster', function (event) {
+$(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+    // Remove the src so the player itself gets removed, as this is the only
+    // reliable way to ensure the video stops playing in IE
+    $("#trailer-video-container").empty();
+});
+$(document).on('click', '.movie', function (event) {
     var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
-    var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+    var sourceUrl = 'https://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+    console.log(sourceUrl);
     $("#trailer-video-container").empty().append($("<iframe></iframe>", {
         'id': 'trailer-video',
         'type': 'text-html',

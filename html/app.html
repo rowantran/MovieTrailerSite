@@ -27,11 +27,6 @@
                 font-family: "Source Sans Pro", "Arial", sans-serif;
             }}
 
-            #trailer-video {{
-                height: 100%;
-                width: 100%;
-             }}
-
             .movie {{
                 text-align: center;
                 margin-bottom: 60px;
@@ -48,6 +43,16 @@
                 width: 225px;
                 height: 340px;
             }}
+
+            .scale-media iframe {{
+                width: 640px;
+                height: 480px;
+            }}
+
+            #trailer .modal-dialog {{
+                width: 640px;
+                height: 480px;
+            }}
         </style>
     </head>
 
@@ -55,11 +60,10 @@
 
         <div class="modal fade" id="trailer">
             <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="scale-media" id="trailer-video-container">
-                        </div>
-                    </div>
+                <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+                    <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+                </a>
+                <div class="scale-media" id="trailer-video-container">
                 </div>
             </div>
         </div>
