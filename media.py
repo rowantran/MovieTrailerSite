@@ -6,18 +6,18 @@ OMDB_API_URL_TEMPLATE = "http://www.omdbapi.com/?t={title}&plot=short&r=json"
 
 class Trailer:
     """Displays a YouTube video when clicked."""
-    
+
     def __init__(self, trailer_yt_id):
         self.yt_id = trailer_yt_id
         self.template = open('html/trailer.html', 'r').read()
-        
+
     def render(self):
         return self.template.format(yt_id=self.yt_id)
 
 
 class Movie:
     """Shows data of a movie and contains a Trailer."""
-    
+
     def __init__(self, movie_title, movie_trailer_yt_id,
                  movie_poster_url, movie_release_date):
         self.title = movie_title
@@ -44,4 +44,5 @@ class OMDBMovie(Movie):
         response = urllib.urlopen(api_url)
         movie_data = json.load(response)
 
-        Movie.__init__(self, movie_title, movie_trailer_yt_id, movie_data["Poster"], movie_data["Year"])
+        Movie.__init__(self, movie_title, movie_trailer_yt_id,
+                       movie_data["Poster"], movie_data["Year"])

@@ -1,29 +1,20 @@
 import media
+import os
 
-TRAILER_JS = """
-$(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
-    // Remove the src so the player itself gets removed, as this is the only
-    // reliable way to ensure the video stops playing in IE
-    $("#trailer-video-container").empty();
-});
-$(document).on('click', '.movie', function (event) {
-    var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
-    var sourceUrl = 'https://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
-    console.log(sourceUrl);
-    $("#trailer-video-container").empty().append($("<iframe></iframe>", {
-        'id': 'trailer-video',
-        'type': 'text-html',
-        'src': sourceUrl,
-       'frameborder': 0
-     }));
-});
-"""
+# JavaScript code to be injected into app.html, must be inserted through
+# Python to avoid collision with format().
+# On clicking the close button of the trailer, stop the YouTube video.
+# On clicking a movie, insert the YouTube video into the modal.
+TRAILER_JS = open('js/trailer.js', 'r').read()
 
 
 class MovieApp:
+    """Collects a list of movies and displays them in a website."""
     def __init__(self, app_title, movies_list):
         self.title = app_title
         self.movies = []
+
+        # Create list of OMDBMovie classes using provided movie list.
         for movie in movies_list:
             self.movies.append(media.OMDBMovie(movie[0], movie[1]))
 
@@ -33,13 +24,19 @@ class MovieApp:
         rendered_movies = ""
         for movie in self.movies:
             rendered_movies += movie.render()
-        return self.template.format(title=self.title, movies=rendered_movies, playTrailer=TRAILER_JS)
+        return self.template.format(title=self.title, movies=rendered_movies,
+                                    playTrailer=TRAILER_JS)
 
     def render_to_file(self, filename):
-        render_target = open(filename, 'w')
+        # Check if build directory exists
+        if not os.path.exists("build"):
+            os.makedirs("build")
+        render_target = open(os.path.join("build", filename), 'w')
         render_target.write(self.render())
 
 if __name__ == "__main__":
+    # Only gets executed if app.py is being run as a standalone file.
+    # Create the demo application and render to build/fresh_tomatoes.html.
     movies = [
         ["Anchorman: The Legend of Ron Burgundy", "NJQ4qEWm9lU"],
         ["Forrest Gump", "bLvqoHBptjg"],
@@ -50,4 +47,4 @@ if __name__ == "__main__":
     ]
 
     fresh_tomatoes = MovieApp("Fresh Tomatoes", movies)
-    fresh_tomatoes.render_to_file("build/fresh_tomatoes.html")
+    fresh_tomatoes.render_to_file("fresh_tomatoes.html")
