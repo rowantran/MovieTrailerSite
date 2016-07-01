@@ -1,13 +1,17 @@
 # MovieTrailerSite
 Movie trailer website for Udacity Full Stack Web Dev course
 
-## media.py
-The media module provides a OMDBMovie class that takes a movie title and YouTube video ID in the constructor.
+## Modules
+### media.py
+The `media` module provides a OMDBMovie class that takes a movie title and YouTube video ID in the constructor.
 The class will automatically retrieve other data about the movie and display it.
+
+### app.py
+The `app` module provides a MovieApp class to create a movie trailer website. Usage is detailed below.
 
 ## Usage
 ### Creating your own website
-To create your own webpage, you must create a MovieApp class from the app module.
+To create your own webpage, you must create a MovieApp class from the `app` module.
 
 The MovieApp() constructor takes one argument, which should be a list.
 This list should be a two-dimensional list, where each row contains the title and the video ID.
